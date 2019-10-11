@@ -17,6 +17,7 @@ namespace SimuladorProcesos
     {
         private Process[] process;
         private LinkedList<Proceso> procesos;
+        List<int> LConsumo = new List<int>();
         private Random random,randomP;
         private MPrioridad runPrioridad;
 
@@ -50,6 +51,7 @@ namespace SimuladorProcesos
                 Proceso proceso = new Proceso(process[i].Id, process[i].ProcessName, tiempo,prioridad,consumo);
                 procesos.AddLast(proceso);
                 agregarProceso(proceso);
+                LConsumo.Add(consumo);
             }
         }
 
@@ -113,14 +115,19 @@ namespace SimuladorProcesos
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            int consumop = random.Next(10, 100);
+            int i=1;
+                //for (int j = 0; j < 15; j++)
+                //{
+                //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
+                //        executionTimers(1);
+                //        i++;
+                //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
+                //        executionTimers(1);
+                //}
                 for (int j = 0; j < 15; j++)
                 {
-                    for (int i = 0; i < 15; i++)
-                    {
-                    chart1.Series["Consumidor"].Points.AddXY(j, consumop);
+                    chart1.Series["Consumidor"].Points.AddXY(j, LConsumo[j]);
                     executionTimers(1);
-                    }
                 }
         }
         public void executionTimers(int tempTime)

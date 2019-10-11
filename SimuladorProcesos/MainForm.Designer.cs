@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.dataGridViewProcesos = new System.Windows.Forms.DataGridView();
             this.buttonEjecutar = new System.Windows.Forms.Button();
             this.mnsMain = new System.Windows.Forms.MenuStrip();
@@ -50,7 +50,7 @@
             this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tiempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Prioridad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Consumo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Memoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesos)).BeginInit();
             this.mnsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -66,7 +66,7 @@
             this.estado,
             this.tiempo,
             this.Prioridad,
-            this.Consumo});
+            this.Memoria});
             this.dataGridViewProcesos.Location = new System.Drawing.Point(12, 27);
             this.dataGridViewProcesos.Name = "dataGridViewProcesos";
             this.dataGridViewProcesos.Size = new System.Drawing.Size(564, 245);
@@ -152,23 +152,23 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(582, 27);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Consumidor";
-            series3.YValuesPerPoint = 2;
-            this.chart1.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series2.Legend = "Legend1";
+            series2.Name = "Consumidor";
+            series2.YValuesPerPoint = 2;
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(332, 245);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
-            title3.Name = "chart1";
-            this.chart1.Titles.Add(title3);
+            title2.Name = "chart1";
+            this.chart1.Titles.Add(title2);
             // 
             // button1
             // 
@@ -207,10 +207,10 @@
             this.Prioridad.HeaderText = "Prioridad";
             this.Prioridad.Name = "Prioridad";
             // 
-            // Consumo
+            // Memoria
             // 
-            this.Consumo.HeaderText = "Consumo";
-            this.Consumo.Name = "Consumo";
+            this.Memoria.HeaderText = "Memoria";
+            this.Memoria.Name = "Memoria";
             // 
             // MainForm
             // 
@@ -253,7 +253,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
         private System.Windows.Forms.DataGridViewTextBoxColumn tiempo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Prioridad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Consumo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Memoria;
     }
 }
 
