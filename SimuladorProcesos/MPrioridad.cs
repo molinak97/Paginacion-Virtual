@@ -7,18 +7,18 @@ using System.Windows.Forms;
 
 namespace SimuladorProcesos
 {
-    public class RoundRobin
+    public class MPrioridad
     {
         DataGridView dataGridView;
 
         //----------------RoundRobin Class Constructor-------------------
-        public RoundRobin(ref DataGridView temp_dataGridView)
+        public MPrioridad(ref DataGridView temp_dataGridView)
         {
             dataGridView = temp_dataGridView;
         }
 
         //----------------Main Round Robin Algorithm Method-------------------
-        public void runRoundRobin(ref Proceso[] procesos, int quantum)
+        public void runPrioridad(ref Proceso[] procesos, int quantum)
         {
             //Assign Each Process Its Execution Time
             foreach (var proceso in procesos)
@@ -28,69 +28,54 @@ namespace SimuladorProcesos
             while (true)
             {
                 bool executionFinished = true;
+                bool PrioridadAlta = false;
+                bool PrioridadMedia = false;
+                bool PrioridadBaja = false;
+
                 //Loop through all processes until the loop ends
                 foreach (var proceso in procesos)
-                {
-                  
-                    if (proceso.TiempoRestante == 0)
+                {                  
+                    if (proceso.Prioridad == 3)
                     {
                         proceso.Estado = "COMPLETED";
                         updateDataGridView(dataGridView, procesos);
+                        executionTimer(1);
+                        proceso.TiempoRestante = 0;
                     }
-                    //Check if the process has any burst time left
-                    else if (proceso.TiempoRestante > 0)
+                    if (proceso.Prioridad < 3)
                     {
-                        //Continue the loop, as a process is executing now and we need to recheck for others
-                        executionFinished = false;
-
-                        //Check if the process remaining time is greater than quantum
-                        if (proceso.TiempoRestante > quantum)
-                        {
-                            //Process Status to Running as its Under Execution
-                            proceso.Estado = "RUNNING";
-                            updateDataGridView(dataGridView, procesos);
-                            executionTimer(quantum);
-
-                            //Remove the quantum time from the remaining time
-                            proceso.TiempoRestante = proceso.TiempoRestante - quantum;
-
-                            //Swap Process to Ready State after execution and continue for next
-                            proceso.Estado = "READY";
-                            updateDataGridView(dataGridView, procesos);
-                        }
-                        //Only runs when the process is on its last cpu burst cycle
-                        else
-                        {
-                            //Check if the process has an IO left before it finishes its last cpu burst cycle
-                            while (proceso.IO > 0)
-                            {
-                                ioExecution(procesos, proceso.Id, proceso.IO);
-                                proceso.IO = proceso.IO - 1;
-                            }
-
-                            //Process Status to Running as its Under Execution
-                            proceso.Estado = "RUNNING";
-                            updateDataGridView(dataGridView, procesos);
-                            executionTimer(proceso.TiempoRestante);
-
-                            //Set remaining time to 0, as the last cpu burst ended
-                            proceso.TiempoRestante = 0;
-
-                            //Change Process Status to Completed
-                            proceso.Estado = "COMPLETED";
-                            updateDataGridView(dataGridView, procesos);
-                        }  
+                        proceso.Estado = "RUNNING";
+                        updateDataGridView(dataGridView, procesos);
+                        executionTimer(quantum);
+                        proceso.Estado = "READY";
+                        updateDataGridView(dataGridView, procesos);
                     }
-                    //Execute Single IO after every CPU burst cycle
-                    if (proceso.IO > 0)
-                    {
-                        ioExecution(procesos, proceso.Id, proceso.IO);
-                        proceso.IO = proceso.IO - 1;
-                    }
-                    
                 }
-                quantum = quantum * 2;
-                //When All Processes have completed their execution
+                foreach (var procesom in procesos)
+                {
+                    if (procesom.Prioridad == 2)
+                    {
+                        executionTimer(1);
+                        procesom.Estado = "COMPLETED";
+                        updateDataGridView(dataGridView, procesos);
+                        procesom.TiempoRestante = 0;
+                    }
+                    if (procesom.Prioridad < 2)
+                    {
+                        procesom.Estado = "RUNNING";
+                        updateDataGridView(dataGridView, procesos);
+                        executionTimer(quantum);
+                        procesom.Estado = "READY";
+                        updateDataGridView(dataGridView, procesos);
+                    }
+                }
+                foreach (var procesob in procesos)
+                {
+                        executionTimer(1);
+                        procesob.Estado = "COMPLETED";
+                        updateDataGridView(dataGridView, procesos);
+                        procesob.TiempoRestante = 0;
+                }
                 if (executionFinished == true)
                 {
                     break;
@@ -108,7 +93,7 @@ namespace SimuladorProcesos
             //Add Processes rows again to data grid view with updated values
             foreach (var proceso in procesos)
             {
-                string[] row = { proceso.Id.ToString(), proceso.Nombre, proceso.Estado, proceso.TiempoRestante.ToString()};
+                string[] row = { proceso.Id.ToString(), proceso.Nombre, proceso.Estado, proceso.TiempoRestante.ToString(), proceso.Prioridad.ToString(), proceso.Consumo.ToString() };
                 dataGridView.Rows.Add(row);
             }
         }
@@ -162,5 +147,6 @@ namespace SimuladorProcesos
                 Application.DoEvents();
             }
         }
+
     }
 }
