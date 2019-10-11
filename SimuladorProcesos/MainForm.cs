@@ -43,11 +43,11 @@ namespace SimuladorProcesos
             //    agregarProceso(proceso);
             //}
             /*Carga solo 15*/
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 40; i++)
             {
                 tiempo = random.Next(2, 5);
                 prioridad = random.Next(1, 4);
-                consumo = random.Next(10,100);
+                consumo = random.Next(40,100);
                 Proceso proceso = new Proceso(process[i].Id, process[i].ProcessName, tiempo,prioridad,consumo);
                 procesos.AddLast(proceso);
                 agregarProceso(proceso);
@@ -116,19 +116,21 @@ namespace SimuladorProcesos
         private void button1_Click(object sender, EventArgs e)
         {
             int i=1;
-                //for (int j = 0; j < 15; j++)
-                //{
-                //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
-                //        executionTimers(1);
-                //        i++;
-                //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
-                //        executionTimers(1);
-                //}
-                for (int j = 0; j < 15; j++)
+            //for (int j = 0; j < 15; j++)
+            //{
+            //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
+            //        executionTimers(1);
+            //        i++;
+            //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
+            //        executionTimers(1);
+            //}
+            chart1.Series["Consumidor"].Points.AddXY(0, 0);
+            for (int j = 1; j < 40; j++)
                 {
                     chart1.Series["Consumidor"].Points.AddXY(j, LConsumo[j]);
                     executionTimers(1);
                 }
+                chart1.Series["Consumidor"].Points.AddXY(40,0);
         }
         public void executionTimers(int tempTime)
         {

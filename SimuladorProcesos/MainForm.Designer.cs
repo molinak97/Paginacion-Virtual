@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.dataGridViewProcesos = new System.Windows.Forms.DataGridView();
             this.buttonEjecutar = new System.Windows.Forms.Button();
             this.mnsMain = new System.Windows.Forms.MenuStrip();
@@ -69,7 +69,7 @@
             this.Memoria});
             this.dataGridViewProcesos.Location = new System.Drawing.Point(12, 27);
             this.dataGridViewProcesos.Name = "dataGridViewProcesos";
-            this.dataGridViewProcesos.Size = new System.Drawing.Size(564, 245);
+            this.dataGridViewProcesos.Size = new System.Drawing.Size(485, 245);
             this.dataGridViewProcesos.TabIndex = 0;
             // 
             // buttonEjecutar
@@ -152,31 +152,32 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(582, 27);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
+            this.chart1.Location = new System.Drawing.Point(503, 27);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series2.Legend = "Legend1";
-            series2.Name = "Consumidor";
-            series2.YValuesPerPoint = 2;
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(332, 245);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series4.Legend = "Legend1";
+            series4.Name = "Consumidor";
+            series4.YValuesPerPoint = 2;
+            this.chart1.Series.Add(series4);
+            this.chart1.Size = new System.Drawing.Size(411, 245);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
-            title2.Name = "chart1";
-            this.chart1.Titles.Add(title2);
+            title4.Name = "chart1";
+            this.chart1.Titles.Add(title4);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(582, 279);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(503, 278);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(411, 44);
             this.button1.TabIndex = 6;
-            this.button1.Text = "button1";
+            this.button1.Text = "CONSUMO";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -201,6 +202,7 @@
             // 
             this.tiempo.HeaderText = "Tiempo";
             this.tiempo.Name = "tiempo";
+            this.tiempo.Visible = false;
             // 
             // Prioridad
             // 
@@ -224,7 +226,7 @@
             this.Controls.Add(this.buttonEjecutar);
             this.Controls.Add(this.dataGridViewProcesos);
             this.Name = "MainForm";
-            this.Text = "Round Robin";
+            this.Text = "CONSUMIDOR";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesos)).EndInit();
             this.mnsMain.ResumeLayout(false);
             this.mnsMain.PerformLayout();
