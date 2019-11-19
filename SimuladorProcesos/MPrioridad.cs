@@ -11,12 +11,14 @@ namespace SimuladorProcesos
     public class MPrioridad
     {
         DataGridView dataGridView;
-        PictureBox pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8;
+        PictureBox pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16;
         private List<Proceso> ListProcessesWaiting = new List<Proceso>();
         private List<PictureBox> ListPictureBoxs = new List<PictureBox>();
+        private List<PictureBox> ListPictureBoxsP = new List<PictureBox>();
+        int pagina = 0;
 
         //----------------RoundRobin Class Constructor-------------------
-        public MPrioridad(ref DataGridView temp_dataGridView, ref PictureBox temp_pictureBox1, ref PictureBox temp_pictureBox2, ref PictureBox temp_pictureBox3, ref PictureBox temp_pictureBox4, ref PictureBox temp_pictureBox5, ref PictureBox temp_pictureBox6, ref PictureBox temp_pictureBox7, ref PictureBox temp_pictureBox8)
+        public MPrioridad(ref DataGridView temp_dataGridView, ref PictureBox temp_pictureBox1, ref PictureBox temp_pictureBox2, ref PictureBox temp_pictureBox3, ref PictureBox temp_pictureBox4, ref PictureBox temp_pictureBox5, ref PictureBox temp_pictureBox6, ref PictureBox temp_pictureBox7, ref PictureBox temp_pictureBox8, ref PictureBox temp_pictureBox9, ref PictureBox temp_pictureBox10, ref PictureBox temp_pictureBox11, ref PictureBox temp_pictureBox12, ref PictureBox temp_pictureBox13, ref PictureBox temp_pictureBox14, ref PictureBox temp_pictureBox15, ref PictureBox temp_pictureBox16)
         {
             dataGridView = temp_dataGridView;
             pictureBox1 = temp_pictureBox1;
@@ -28,8 +30,19 @@ namespace SimuladorProcesos
             pictureBox7 = temp_pictureBox7;
             pictureBox8 = temp_pictureBox8;
 
-            PictureBox[] PB = { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox6, pictureBox7, pictureBox8 };
+            pictureBox9 = temp_pictureBox9;
+            pictureBox10 = temp_pictureBox10;
+            pictureBox11 = temp_pictureBox11;
+            pictureBox12 = temp_pictureBox12;
+            pictureBox13 = temp_pictureBox13;
+            pictureBox14 = temp_pictureBox14;
+            pictureBox15 = temp_pictureBox15;
+            pictureBox16 = temp_pictureBox16;
+
+            PictureBox[] PB = { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6,pictureBox7, pictureBox8 };
+            PictureBox[] PP = { pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16};
             ListPictureBoxs.AddRange(PB);
+            ListPictureBoxsP.AddRange(PP);
         }
 
         //----------------Main Round Robin Algorithm Method-------------------
@@ -52,10 +65,14 @@ namespace SimuladorProcesos
                         if (task.Memoria > 64)
                         {
                             sectors = Math.Ceiling(task.Memoria / 64.0);
+                            ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                            pagina++;
                         }
                         else
                         {
                             sectors = 1;
+                            ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                            pagina++;
                         }
 
                         if (freeSectors >= 1 && ListProcessesWaiting.Count() > 0)
@@ -163,10 +180,13 @@ namespace SimuladorProcesos
                                     if (PB.BackColor == Color.DarkGray)
                                     {
                                         PB.BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                                        //ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
                                         sectors--;
                                         freeSectors--;
+                                        //pagina++;
                                         if (sectors == 0) { break; }
                                     }
+
                                 }
                             }
 

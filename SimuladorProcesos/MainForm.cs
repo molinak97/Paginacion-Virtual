@@ -36,7 +36,7 @@ namespace SimuladorProcesos
         private void cargarProcesos()
         {
             int tiempo,memoria;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 8; i++)
             {
                 tiempo = random.Next(3, 5);
                 memoria = random.Next(20, 100);
@@ -63,7 +63,7 @@ namespace SimuladorProcesos
             Proceso[] arrProcesos = procesos.ToArray();
             //runPrioridad = new MPrioridad(ref dataGridViewProcesos);
             //runPrioridad.runPrioridad(ref arrProcesos, quantum);
-            runPrioridad = new MPrioridad(ref dataGridViewProcesos, ref pictureBox1, ref pictureBox2, ref pictureBox3, ref pictureBox4, ref pictureBox5, ref pictureBox6, ref pictureBox7, ref pictureBox8);
+            runPrioridad = new MPrioridad(ref dataGridViewProcesos, ref pictureBox1, ref pictureBox2, ref pictureBox3, ref pictureBox4, ref pictureBox5, ref pictureBox6, ref pictureBox7, ref pictureBox8, ref pictureBox9, ref pictureBox10, ref pictureBox11, ref pictureBox12, ref pictureBox13, ref pictureBox14, ref pictureBox15, ref pictureBox16);
             runPrioridad.runPrioridad(ref arrProcesos, quantum);
         }
         private void buttonCorrer_Click(object sender, EventArgs e)
