@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,75 +11,237 @@ namespace SimuladorProcesos
     public class MPrioridad
     {
         DataGridView dataGridView;
+        PictureBox pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8;
+        private List<Proceso> ListProcessesWaiting = new List<Proceso>();
+        private List<PictureBox> ListPictureBoxs = new List<PictureBox>();
 
         //----------------RoundRobin Class Constructor-------------------
-        public MPrioridad(ref DataGridView temp_dataGridView)
+        public MPrioridad(ref DataGridView temp_dataGridView, ref PictureBox temp_pictureBox1, ref PictureBox temp_pictureBox2, ref PictureBox temp_pictureBox3, ref PictureBox temp_pictureBox4, ref PictureBox temp_pictureBox5, ref PictureBox temp_pictureBox6, ref PictureBox temp_pictureBox7, ref PictureBox temp_pictureBox8)
         {
             dataGridView = temp_dataGridView;
+            pictureBox1 = temp_pictureBox1;
+            pictureBox2 = temp_pictureBox2;
+            pictureBox3 = temp_pictureBox3;
+            pictureBox4 = temp_pictureBox4;
+            pictureBox5 = temp_pictureBox5;
+            pictureBox6 = temp_pictureBox6;
+            pictureBox7 = temp_pictureBox7;
+            pictureBox8 = temp_pictureBox8;
+
+            PictureBox[] PB = { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox6, pictureBox7, pictureBox8 };
+            ListPictureBoxs.AddRange(PB);
         }
 
         //----------------Main Round Robin Algorithm Method-------------------
         public void runPrioridad(ref Proceso[] procesos, int quantum)
         {
-            //Assign Each Process Its Execution Time
-            foreach (var proceso in procesos)
+            int freeSectors = 8;
+            double sectors = 0;
+
+            foreach (var proceso1 in procesos)
             {
-                proceso.TiempoRestante = proceso.Tiempo;
+                proceso1.TiempoRestante = proceso1.Tiempo;
             }
             while (true)
             {
                 bool executionFinished = true;
-                bool PrioridadAlta = false;
-                bool PrioridadMedia = false;
-                bool PrioridadBaja = false;
+                foreach (var task in procesos)
+                {
+                    if (task.Estado == "NEW" || task.Estado == "READY" || task.Tiempo != 0) // 
+                    {
+                        if (task.Memoria > 64)
+                        {
+                            sectors = Math.Ceiling(task.Memoria / 64.0);
+                        }
+                        else
+                        {
+                            sectors = 1;
+                        }
 
-                //Loop through all processes until the loop ends
-                foreach (var proceso in procesos)
-                {                  
-                    if (proceso.Prioridad == 3)
-                    {
-                        proceso.Estado = "COMPLETED";
-                        updateDataGridView(dataGridView, procesos);
-                        executionTimer(1);
-                        proceso.TiempoRestante = 0;
-                    }
-                    if (proceso.Prioridad < 3)
-                    {
-                        proceso.Estado = "RUNNING";
-                        updateDataGridView(dataGridView, procesos);
-                        executionTimer(quantum);
-                        proceso.Estado = "READY";
-                        updateDataGridView(dataGridView, procesos);
+                        if (freeSectors >= 1 && ListProcessesWaiting.Count() > 0)
+                        {
+                            List<int> arrayAux = new List<int>();
+                            int j = 0;
+                            foreach (var task2 in ListProcessesWaiting)
+                            {
+                                // Calculo de sectores
+                                if (task2.Memoria > 64)
+                                {
+                                    sectors = Math.Ceiling(task2.Memoria / 64.0);
+                                }
+                                else
+                                {
+                                    sectors = 1;
+                                }
+
+                                if (sectors <= freeSectors)
+                                {
+                                    // Pintado de sectores que utilizara el proceso
+                                    foreach (var PB in ListPictureBoxs)
+                                    {
+                                        if (PB.BackColor == Color.DarkGray)
+                                        {
+                                            PB.BackColor = System.Drawing.ColorTranslator.FromHtml(task2.Color);
+                                            sectors--;
+                                            freeSectors--;
+                                            if (sectors == 0) { break; }
+                                        }
+                                    }
+
+                                    //algoritmo round robin
+                                    if (task2.TiempoRestante > 0)
+                                    {
+                                        executionFinished = false;
+                                        if (task2.TiempoRestante > quantum)
+                                        {
+
+                                            task2.Estado = "RUNNING";
+                                            updateDataGridView(dataGridView, procesos);
+                                            executionTimer(quantum);
+
+                                            task2.TiempoRestante = task2.TiempoRestante - quantum;
+
+                                            task2.Estado = "READY";
+                                            updateDataGridView(dataGridView, procesos);
+
+                                            arrayAux.Add(j);
+                                        }
+                                        else
+                                        {
+                                            while (task2.IO > 0)
+                                            {
+                                                ioExecution(procesos, task2.Id, task2.IO);
+                                                task2.IO = task2.IO - 1;
+                                            }
+
+                                            task2.Estado = "RUNNING";
+                                            updateDataGridView(dataGridView, procesos);
+                                            executionTimer(task2.TiempoRestante);
+
+                                            task2.TiempoRestante = 0;
+
+                                            task2.Estado = "COMPLETED";
+                                            updateDataGridView(dataGridView, procesos);
+
+                                            double aux = Math.Ceiling(task2.Memoria / 64.0);
+
+                                            freeSectors += (int)aux;
+                                            foreach (var PB2 in ListPictureBoxs)
+                                            {
+                                                if (PB2.BackColor == System.Drawing.ColorTranslator.FromHtml(task2.Color))
+                                                {
+                                                    PB2.BackColor = Color.DarkGray;
+                                                    aux--;
+                                                    if (aux == 0) { break; }
+                                                }
+                                            }
+                                            arrayAux.Add(j);
+                                        }
+                                    }
+                                    if (task.IO > 0)
+                                    {
+                                        ioExecution(procesos, task.Id, task.IO);
+                                        task.IO = task.IO - 1;
+                                    }
+                                }
+                                j++;
+
+                            }
+                            //ListProcessesWaiting.Clear();
+                            foreach (var i in arrayAux)
+                            {
+                                ListProcessesWaiting.RemoveAt(i);
+                            }
+                        }
+                        if (sectors <= freeSectors || task.Estado == "READY")
+                        {
+                            // Pintado de sectores que utilizara el proceso
+                            if (task.Estado == "NEW")  // || task.Estado == "WAITING"
+                            {
+                                foreach (var PB in ListPictureBoxs)
+                                {
+                                    if (PB.BackColor == Color.DarkGray)
+                                    {
+                                        PB.BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                                        sectors--;
+                                        freeSectors--;
+                                        if (sectors == 0) { break; }
+                                    }
+                                }
+                            }
+
+
+                            if (task.TiempoRestante > 0)
+                            {
+                                executionFinished = false;
+                                if (task.TiempoRestante > quantum)
+                                {
+
+                                    task.Estado = "RUNNING";
+                                    updateDataGridView(dataGridView, procesos);
+                                    executionTimer(quantum);
+
+                                    task.TiempoRestante = task.TiempoRestante - quantum;
+
+                                    task.Estado = "READY";
+                                    updateDataGridView(dataGridView, procesos);
+                                }
+                                else
+                                {
+                                    while (task.IO > 0)
+                                    {
+                                        ioExecution(procesos, task.Id, task.IO);
+                                        task.IO = task.IO - 1;
+                                    }
+
+                                    task.Estado = "RUNNING";
+                                    updateDataGridView(dataGridView, procesos);
+                                    executionTimer(task.TiempoRestante);
+
+                                    task.TiempoRestante = 0;
+                                    task.Estado = "COMPLETED";
+                                    updateDataGridView(dataGridView, procesos);
+
+                                    double aux = Math.Ceiling(task.Memoria / 64.0);
+
+                                    freeSectors += (int)aux;
+                                    foreach (var PB in ListPictureBoxs)
+                                    {
+                                        if (PB.BackColor == System.Drawing.ColorTranslator.FromHtml(task.Color))
+                                        {
+                                            PB.BackColor = Color.DarkGray;
+                                            aux--;
+                                            if (aux == 0) { break; }
+                                        }
+                                    }
+
+                                }
+                            }
+                            if (task.IO > 0)
+                            {
+                                ioExecution(procesos, task.Id, task.IO);
+                                task.IO = task.IO - 1;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("SIN ESPACIO ELSE");
+                            task.Estado = "WAITING";
+                            updateDataGridView(dataGridView, procesos);
+
+                            ListProcessesWaiting.Add(task);
+                        }
                     }
                 }
-                foreach (var procesom in procesos)
+                if (executionFinished == true) { break; }
+            }
+
+            //Limpia los recuadros faltantes
+            foreach (var PB in ListPictureBoxs)
+            {
+                if (PB.BackColor != Color.Gray)
                 {
-                    if (procesom.Prioridad == 2)
-                    {
-                        executionTimer(1);
-                        procesom.Estado = "COMPLETED";
-                        updateDataGridView(dataGridView, procesos);
-                        procesom.TiempoRestante = 0;
-                    }
-                    if (procesom.Prioridad < 2)
-                    {
-                        procesom.Estado = "RUNNING";
-                        updateDataGridView(dataGridView, procesos);
-                        executionTimer(quantum);
-                        procesom.Estado = "READY";
-                        updateDataGridView(dataGridView, procesos);
-                    }
-                }
-                foreach (var procesob in procesos)
-                {
-                        executionTimer(1);
-                        procesob.Estado = "COMPLETED";
-                        updateDataGridView(dataGridView, procesos);
-                        procesob.TiempoRestante = 0;
-                }
-                if (executionFinished == true)
-                {
-                    break;
+                    PB.BackColor = Color.DarkGray;
                 }
             }
         }
@@ -93,7 +256,7 @@ namespace SimuladorProcesos
             //Add Processes rows again to data grid view with updated values
             foreach (var proceso in procesos)
             {
-                string[] row = { proceso.Id.ToString(), proceso.Nombre, proceso.Estado, proceso.TiempoRestante.ToString(), proceso.Prioridad.ToString(), proceso.Consumo.ToString() };
+                string[] row = { proceso.Id.ToString(), proceso.Nombre, proceso.Estado, proceso.TiempoRestante.ToString(), proceso.Memoria.ToString() };
                 dataGridView.Rows.Add(row);
             }
         }

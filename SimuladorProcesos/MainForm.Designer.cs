@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.dataGridViewProcesos = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Memoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonEjecutar = new System.Windows.Forms.Button();
             this.mnsMain = new System.Windows.Forms.MenuStrip();
             this.stripMAcerca = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,17 +44,24 @@
             this.materiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alumnoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maestroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button1 = new System.Windows.Forms.Button();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prioridad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Memoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesos)).BeginInit();
             this.mnsMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewProcesos
@@ -65,22 +73,49 @@
             this.nombre,
             this.estado,
             this.tiempo,
-            this.Prioridad,
             this.Memoria});
             this.dataGridViewProcesos.Location = new System.Drawing.Point(12, 27);
             this.dataGridViewProcesos.Name = "dataGridViewProcesos";
-            this.dataGridViewProcesos.Size = new System.Drawing.Size(485, 245);
+            this.dataGridViewProcesos.Size = new System.Drawing.Size(452, 245);
             this.dataGridViewProcesos.TabIndex = 0;
+            // 
+            // id
+            // 
+            this.id.HeaderText = "ID";
+            this.id.Name = "id";
+            this.id.Visible = false;
+            this.id.Width = 50;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            // 
+            // estado
+            // 
+            this.estado.HeaderText = "Estado";
+            this.estado.Name = "estado";
+            // 
+            // tiempo
+            // 
+            this.tiempo.HeaderText = "Tiempo";
+            this.tiempo.Name = "tiempo";
+            // 
+            // Memoria
+            // 
+            this.Memoria.HeaderText = "Memoria";
+            this.Memoria.Name = "Memoria";
             // 
             // buttonEjecutar
             // 
             this.buttonEjecutar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonEjecutar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonEjecutar.Image = ((System.Drawing.Image)(resources.GetObject("buttonEjecutar.Image")));
-            this.buttonEjecutar.Location = new System.Drawing.Point(12, 278);
+            this.buttonEjecutar.Location = new System.Drawing.Point(470, 27);
             this.buttonEjecutar.Name = "buttonEjecutar";
-            this.buttonEjecutar.Size = new System.Drawing.Size(149, 44);
+            this.buttonEjecutar.Size = new System.Drawing.Size(90, 44);
             this.buttonEjecutar.TabIndex = 1;
-            this.buttonEjecutar.Text = "INICIAR";
+            this.buttonEjecutar.Text = "RUN";
             this.buttonEjecutar.UseVisualStyleBackColor = true;
             this.buttonEjecutar.Click += new System.EventHandler(this.buttonCorrer_Click);
             // 
@@ -92,7 +127,7 @@
             this.stripMCreditos});
             this.mnsMain.Location = new System.Drawing.Point(0, 0);
             this.mnsMain.Name = "mnsMain";
-            this.mnsMain.Size = new System.Drawing.Size(940, 24);
+            this.mnsMain.Size = new System.Drawing.Size(568, 24);
             this.mnsMain.TabIndex = 4;
             this.mnsMain.Text = "menuStrip1";
             // 
@@ -150,78 +185,92 @@
             this.maestroToolStripMenuItem.Text = "Maestro";
             this.maestroToolStripMenuItem.Click += new System.EventHandler(this.maestroToolStripMenuItem_Click);
             // 
-            // chart1
+            // pictureBox1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
-            this.chart1.Location = new System.Drawing.Point(503, 27);
-            this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series4.Legend = "Legend1";
-            series4.Name = "Consumidor";
-            series4.YValuesPerPoint = 2;
-            this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(411, 245);
-            this.chart1.TabIndex = 5;
-            this.chart1.Text = "chart1";
-            title4.Name = "chart1";
-            this.chart1.Titles.Add(title4);
+            this.pictureBox1.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 278);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
             // 
-            // button1
+            // pictureBox2
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(503, 278);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(411, 44);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "CONSUMO";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox2.Location = new System.Drawing.Point(69, 278);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
             // 
-            // id
+            // pictureBox3
             // 
-            this.id.HeaderText = "ID";
-            this.id.Name = "id";
-            this.id.Visible = false;
-            this.id.Width = 50;
+            this.pictureBox3.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox3.Location = new System.Drawing.Point(126, 278);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox3.TabIndex = 7;
+            this.pictureBox3.TabStop = false;
             // 
-            // nombre
+            // pictureBox4
             // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
+            this.pictureBox4.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox4.Location = new System.Drawing.Point(183, 278);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox4.TabIndex = 8;
+            this.pictureBox4.TabStop = false;
             // 
-            // estado
+            // pictureBox5
             // 
-            this.estado.HeaderText = "Estado";
-            this.estado.Name = "estado";
+            this.pictureBox5.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox5.Location = new System.Drawing.Point(240, 278);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox5.TabIndex = 9;
+            this.pictureBox5.TabStop = false;
             // 
-            // tiempo
+            // pictureBox6
             // 
-            this.tiempo.HeaderText = "Tiempo";
-            this.tiempo.Name = "tiempo";
-            this.tiempo.Visible = false;
+            this.pictureBox6.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox6.Location = new System.Drawing.Point(297, 278);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox6.TabIndex = 10;
+            this.pictureBox6.TabStop = false;
             // 
-            // Prioridad
+            // pictureBox7
             // 
-            this.Prioridad.HeaderText = "Prioridad";
-            this.Prioridad.Name = "Prioridad";
+            this.pictureBox7.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox7.Location = new System.Drawing.Point(354, 278);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox7.TabIndex = 11;
+            this.pictureBox7.TabStop = false;
             // 
-            // Memoria
+            // pictureBox8
             // 
-            this.Memoria.HeaderText = "Memoria";
-            this.Memoria.Name = "Memoria";
+            this.pictureBox8.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox8.Location = new System.Drawing.Point(413, 278);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(51, 44);
+            this.pictureBox8.TabIndex = 12;
+            this.pictureBox8.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(940, 334);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.chart1);
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(568, 334);
+            this.Controls.Add(this.pictureBox8);
+            this.Controls.Add(this.pictureBox7);
+            this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.mnsMain);
             this.Controls.Add(this.buttonEjecutar);
             this.Controls.Add(this.dataGridViewProcesos);
@@ -230,7 +279,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesos)).EndInit();
             this.mnsMain.ResumeLayout(false);
             this.mnsMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -248,13 +304,18 @@
         private System.Windows.Forms.ToolStripMenuItem materiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem alumnoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem maestroToolStripMenuItem;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
         private System.Windows.Forms.DataGridViewTextBoxColumn tiempo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prioridad;
         private System.Windows.Forms.DataGridViewTextBoxColumn Memoria;
     }
 }

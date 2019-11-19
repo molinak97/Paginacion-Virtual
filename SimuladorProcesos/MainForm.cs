@@ -20,6 +20,8 @@ namespace SimuladorProcesos
         List<int> LConsumo = new List<int>();
         private Random random,randomP;
         private MPrioridad runPrioridad;
+        int quantum = 2;
+        String[] Colors = { "#E3A21A", "#7e3878", "#1e7145", "#000000", "#603cba", "#00aba9", "#2d89ef", "#2b5797", "#ffc40d", "#da532c"};
 
         public MainForm()
         {
@@ -33,25 +35,15 @@ namespace SimuladorProcesos
 
         private void cargarProcesos()
         {
-            int tiempo, prioridad,consumo,j;
-            /* Carga todo lo procesos*/
-            //foreach (Process p in process)
-            //{
-            //    tiempo = random.Next(2, 8);
-            //    Proceso proceso = new Proceso(p.Id, p.ProcessName, tiempo);
-            //    procesos.AddLast(proceso);
-            //    agregarProceso(proceso);
-            //}
-            /*Carga solo 15*/
-            for (int i = 0; i < 40; i++)
+            int tiempo,memoria;
+            for (int i = 0; i < 10; i++)
             {
-                tiempo = random.Next(2, 5);
-                prioridad = random.Next(1, 4);
-                consumo = random.Next(40,100);
-                Proceso proceso = new Proceso(process[i].Id, process[i].ProcessName, tiempo,prioridad,consumo);
+                tiempo = random.Next(3, 5);
+                memoria = random.Next(20, 100);
+
+                Proceso proceso = new Proceso(process[i].Id, process[i].ProcessName, tiempo, memoria, Colors[i]);
                 procesos.AddLast(proceso);
                 agregarProceso(proceso);
-                LConsumo.Add(consumo);
             }
         }
 
@@ -61,20 +53,17 @@ namespace SimuladorProcesos
             string nombre = proceso.Nombre;
             string estado = proceso.Estado;
             string tiempo = proceso.Tiempo.ToString();
-            string prioridad = proceso.Prioridad.ToString();
-            string consumo = proceso.Consumo.ToString();
-            string[] row = {id, nombre, estado, tiempo,prioridad,consumo};
+            string memoria = proceso.Memoria.ToString();
+            string[] row = { id, nombre, estado, tiempo, memoria };
             dataGridViewProcesos.Rows.Add(row);
         }
 
         private void IniciarPrioridad()
         {
-            int quantum = 1;
             Proceso[] arrProcesos = procesos.ToArray();
-            //buttonEjecutar.Hide();
-            //numericUpDownQuantum.Hide();
-            //labelQuantum.Text = quantum.ToString()
-            runPrioridad = new MPrioridad(ref dataGridViewProcesos);
+            //runPrioridad = new MPrioridad(ref dataGridViewProcesos);
+            //runPrioridad.runPrioridad(ref arrProcesos, quantum);
+            runPrioridad = new MPrioridad(ref dataGridViewProcesos, ref pictureBox1, ref pictureBox2, ref pictureBox3, ref pictureBox4, ref pictureBox5, ref pictureBox6, ref pictureBox7, ref pictureBox8);
             runPrioridad.runPrioridad(ref arrProcesos, quantum);
         }
         private void buttonCorrer_Click(object sender, EventArgs e)
@@ -106,31 +95,12 @@ namespace SimuladorProcesos
         }
         private void refernciaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Stalling (Pagina: 433)", "Sistemas Operativos");
         }
         private void reseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-            "A cada proceso se le asigna un intervalo de tiempo, llmadado cuanto, durante el cual se le permite ejecutarse. Si el proceso todavia se esta ejecutando al expirar su cuanto, el sistema operativo se apropia del la CPU naturalmente se efectua cuando el proceso se boquea. El round robin es facil de implementar.", "Algoritmo RR");
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            int i=1;
-            //for (int j = 0; j < 15; j++)
-            //{
-            //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
-            //        executionTimers(1);
-            //        i++;
-            //        chart1.Series["Consumidor"].Points.AddXY(i, LConsumo[j]);
-            //        executionTimers(1);
-            //}
-            chart1.Series["Consumidor"].Points.AddXY(0, 0);
-            for (int j = 1; j < 40; j++)
-                {
-                    chart1.Series["Consumidor"].Points.AddXY(j, LConsumo[j]);
-                    executionTimers(1);
-                }
-                chart1.Series["Consumidor"].Points.AddXY(40,0);
         }
         public void executionTimers(int tempTime)
         {
