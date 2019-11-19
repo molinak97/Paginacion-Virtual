@@ -95,6 +95,8 @@ namespace SimuladorProcesos
         }
         private void refernciaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(
+            "Pagina 323\n", "Tenanbaum:");
         }
         private void reseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {

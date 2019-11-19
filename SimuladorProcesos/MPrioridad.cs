@@ -65,14 +65,20 @@ namespace SimuladorProcesos
                         if (task.Memoria > 64)
                         {
                             sectors = Math.Ceiling(task.Memoria / 64.0);
-                            ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
-                            pagina++;
+                            if(pagina<7)
+                            {
+                                ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                                pagina++;
+                            }
                         }
                         else
                         {
                             sectors = 1;
-                            ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
-                            pagina++;
+                            if (pagina < 7)
+                            {
+                                ListPictureBoxsP[pagina].BackColor = System.Drawing.ColorTranslator.FromHtml(task.Color);
+                                pagina++;
+                            }
                         }
 
                         if (freeSectors >= 1 && ListProcessesWaiting.Count() > 0)

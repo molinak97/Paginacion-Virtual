@@ -395,7 +395,7 @@
             this.Controls.Add(this.buttonEjecutar);
             this.Controls.Add(this.dataGridViewProcesos);
             this.Name = "MainForm";
-            this.Text = "CONSUMIDOR";
+            this.Text = "PAGINACION VIRTUAL";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesos)).EndInit();
             this.mnsMain.ResumeLayout(false);
             this.mnsMain.PerformLayout();
